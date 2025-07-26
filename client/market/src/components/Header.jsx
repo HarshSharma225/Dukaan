@@ -9,8 +9,8 @@ function Header() {
         <nav className="flex gap-6 text-orange-500 text-lg">
           <a href="/" className="hover:text-orange-400">Home</a>
           <a href="/item-list" className="hover:text-orange-400">Shop</a>
-          <a href="#" className="hover:text-orange-400">About</a>
-          <a href="#" className="hover:text-orange-400">Contact</a>
+          <a href="/about" className="hover:text-orange-400">About</a>
+          <a href="/contact" className="hover:text-orange-400">Contact</a>
         </nav>
       </header>
     </div>

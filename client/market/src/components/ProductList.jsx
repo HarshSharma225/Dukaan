@@ -28,11 +28,11 @@ function ProductList() {
 
     }, [])
 
-    const randomImage = () => {
-        if (imageList.length === 0) return null;
-        const idx = Math.floor(Math.random() * imageList.length);
-        return imageList[idx];
-    };
+    // const randomImage = () => {
+    //     if (imageList.length === 0) return null;
+    //     const idx = Math.floor(Math.random() * imageList.length);
+    //     return imageList[idx];
+    // };
 
 
     return (
@@ -42,15 +42,15 @@ function ProductList() {
             {!loading &&
                 <div className="bg-black w-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-2">
                     {products.map((item) => {
-                        const image = randomImage();
+                        // const image = randomImage();
 
                         return (
-                            <Link key={item._id} to={`/item-detail/${item._id}`} state={{ imageUrl: image }}>
+                            <Link key={item._id} to={`/item-detail/${item._id}`}>
                                 <div className="bg-white rounded-lg inset-shadow-orange-600 inset-shadow-sm p-4 flex flex-col items-center">
 
                                     <img
                                         className="w-1/2 h-32 object-cover mb-4 rounded border-1"
-                                        src={image}
+                                        src={`http://localhost:5000/${item.image_url.replace(/\\/g, "/")}`}
                                         alt={item.name}
                                     />
                                     <div className="font-semibold text-lg mb-2">{item.name}</div>

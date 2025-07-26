@@ -8,6 +8,9 @@ import Footer from './components/Footer'
 import ProductList from './components/ProductList'
 import ProductDetails from './components/ProductDetails'
 import Cart from './components/Cart'
+import CheckoutPage from './components/CheckoutPage'
+import AboutPage from './components/AboutPage'
+import ContactPage from './components/Contact'
 const router = createBrowserRouter([
   {
     path: "/",
@@ -32,6 +35,18 @@ const router = createBrowserRouter([
   {
     path: "/cart",
     element: <Cart/>
+  },
+  {
+    path: "/checkout",
+    element: <CheckoutPage/>
+  },
+  {
+    path: "/about",
+    element: <AboutPage/>
+  },
+  {
+    path: "/contact",
+    element: <ContactPage/>
   }
 ])
 function App() {

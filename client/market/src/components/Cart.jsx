@@ -1,21 +1,23 @@
 import React, { useCallback, useEffect, useState } from "react";
 // import { X } from "lucide-react";
-import minilogo from "../assets/mini-logo.png"
+// import minilogo from "../assets/mini-logo.png"
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 const Cart = ({ onClose }) => {
+  const navigate = useNavigate();
 
   const [products, setProducts] = useState([]);
   // const [productName, setProductName] = useState();
   // const [productPrice, setProductPrice] = useState();
   const [totalCost,setTotalCost] = useState(0);
   const location = useLocation()
-  const { imageurl, id } = location.state;
+  const productId = location.state || null;
   const userId = Cookies.get("userId")
   
-  console.log(userId)
+  console.log(productId)
   // const getProductDetail = useCallback(async () => {
   //   try {
   //     fetch(`http://localhost:5000/product/${id}`, {
@@ -65,13 +67,26 @@ const Cart = ({ onClose }) => {
 
   }, [getUserCartDetails]);
 
+  const handleCancle = (e)=>{
+    e.preventDefault();
+
+    if(productId) navigate(`/item-detail/${productId}`)
+    else navigate("/item-list")
+  }
+
+   const buynow=(e)=>{
+        e.preventDefault();
+
+        navigate(`/checkout`)
+    }
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50">
       {/* Cart Container */}
-      <div className="bg-black text-white rounded-lg w-full sm:w-[90%] md:w-[500px] lg:w-[400px] max-h-screen overflow-y-auto p-6 relative transition-transform transform">
+      <div className="bg-black text-white rounded-lg w-full sm:w-[90%] md:w-[500px] lg:w-[500px] max-h-screen overflow-y-auto p-6 relative transition-transform transform">
         {/* Close Button */}
         <button
-          onClick={onClose}
+          onClick={handleCancle}
           className="absolute top-4 right-4 text-2xl hover:text-gray-400"
         >
           {/* <X /> */}
@@ -91,8 +106,7 @@ const Cart = ({ onClose }) => {
             {/* Image and Name */}
             <div className="flex items-center gap-4">
               <img
-              // {...console.log(item.image_url)}
-                src={item.image_url}
+                src={`http://localhost:5000/${item.product.image_url.replace(/\\/g, "/")}`}
                 alt="Product"
                 className="w-16 h-16 rounded bg-gray-900 object-cover"
               />
@@ -131,7 +145,8 @@ const Cart = ({ onClose }) => {
         </div>
 
         {/* Checkout Button */}
-        <button className="w-full bg-orange-500 text-black text-lg font-bold py-3 rounded-lg hover:bg-orange-600 transition">
+        <button className="w-full bg-orange-500 text-black text-lg font-bold py-3 rounded-lg hover:bg-orange-600 transition" 
+          onClick={buynow}>
           CHECKOUT
         </button>
       </div>

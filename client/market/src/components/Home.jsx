@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import image8 from "../assets/image8.jpg"
-import image2 from "../assets/image2.jpg"
+// import image2 from "../assets/image2.jpg"
 import image3 from "../assets/image3.jpg"
 import image5 from "../assets/image5.png"
 import image6 from "../assets/image6.png"

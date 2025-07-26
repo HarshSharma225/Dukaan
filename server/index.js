@@ -6,11 +6,19 @@ const {User,Product} = require("./mongodb/user");
 const cookieParser = require("cookie-parser");
 const cors = require("cors")
 const productlist = require("./productList.json")
+const path = require("path");
+const fs = require("fs");
+// const path = require("path");
+
+
 
 const secretkey = "radharani";
 
 const app = express()
 const port = 5000;
+
+app.use('/assets', express.static(path.join(__dirname, 'assets')));
+
 
 app.use(cors({
     origin: "http://localhost:5173",
@@ -166,6 +174,70 @@ app.post("/product/register",async(req,res)=>{
         console.log(`error in server/index.js:line:54 :: ${error}`)
     }
 })
+app.post("/cart/increase", async (req, res) => {
+    const { userId, productId } = req.body;
+    try {
+        const user = await User.findById(userId);
+        const item = user.cart.find(i => i.product_id.toString() === productId);
+        if (item) {
+            item.quantity += 1;
+            await user.save();
+            return res.json({ success: true, cart: user.cart });
+        }
+        res.status(404).json({ success: false, message: "Item not found" });
+    } catch (err) {
+        res.status(500).json({ success: false, message: "Server error" });
+    }
+});
+app.post("/cart/decrease", async (req, res) => {
+    const { userId, productId } = req.body;
+    try {
+        const user = await User.findById(userId);
+        const item = user.cart.find(i => i.product_id.toString() === productId);
+        if (item && item.quantity > 1) {
+            item.quantity -= 1;
+            await user.save();
+            return res.json({ success: true, cart: user.cart });
+        }
+        res.status(404).json({ success: false, message: "Item not found or quantity is 1" });
+    } catch (err) {
+        res.status(500).json({ success: false, message: "Server error" });
+    }
+});
+
+// // const images = import.meta.glob("/src/assets/productImages/*.{jpg,jpeg,png}", { eager: true });
+// const imagesDir = path.join(__dirname, "assets", "productImages");
+// const imageList = fs.readdirSync(imagesDir)
+//   .filter(file => /\.(jpg|jpeg|png)$/i.test(file))
+//   .map(file => path.join("assets", "productImages", file)); // relative path for storage
+
+//     // const imageList = Object.values(images).map(img => img.default);
+
+// const randomImage = () => {
+//         if (imageList.length === 0) return null;
+//         const idx = Math.floor(Math.random() * imageList.length);
+//         return imageList[idx];
+// };
+
+// app.post("/addimageurl", async (req, res) => {
+//     try {
+//         // Get all products
+//         const products = await Product.find();
+
+//         // Update each product with a random image_url
+//         const updates = await Promise.all(products.map(async (product) => {
+//             const image_url = randomImage();
+//             product.image_url = image_url;
+//             await product.save();
+//             return { _id: product._id, image_url };
+//         }));
+
+//         res.status(200).json({ message: "Image URLs added to all products", updates });
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ message: "Server error" });
+//     }
+// });
 
 
 

@@ -25,7 +25,6 @@ const UserSchema = new mongoose.Schema({
             },
             image_url: {
                 type: String,
-                required: true
             },
             quantity: {
                 type: Number,
@@ -46,6 +45,9 @@ const productSchema = new mongoose.Schema({
     },
     quantity: {
         type: Number
+    },
+    image_url: {
+        type: String
     }
 });
 

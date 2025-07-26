@@ -7,13 +7,15 @@ function ProductDetails() {
     const navigate = useNavigate();
     const userId = Cookies.get("userId")
     const { id } = useParams();
-    const location = useLocation();
-    const { imageUrl } = location.state || null;
+    // const location = useLocation();
+    // const { imageUrl } = location.state;
     const [data, setData] = useState({});
     const [loading, setLoading] = useState(true);
-    const [isLiked,setIsLiked] = useState(false)
+    const [isLiked, setIsLiked] = useState(false)
 
     useEffect(() => {
+        // console.log("pid: ",id)
+
         const getProductDetails = async () => {
             try {
                 const response = await fetch(`http://localhost:5000/product/${id}`);
@@ -34,18 +36,18 @@ function ProductDetails() {
         getProductDetails()
     }, [id])
 
-    const addToCart =async (e)=>{
+    const addToCart = async (e) => {
         e.preventDefault();
 
         try {
-            fetch(`http://localhost:5000/user/${userId}/cart`,{
+            fetch(`http://localhost:5000/user/${userId}/cart`, {
                 method: "POST",
                 headers: {
-                    "Content-Type" : "application/json",
+                    "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
                     product_id: id,
-                    image_url: imageUrl,
+                    // image_url: imageUrl,
                     quantity: 1,
                 })
             })
@@ -55,23 +57,34 @@ function ProductDetails() {
             //         quantity: 1,
             //     })
         } catch (error) {
-            console.log("Error in ProductDetail.jsx line 52:: ",error)
+            console.log("Error in ProductDetail.jsx line 52:: ", error)
         }
-        
-        navigate("/cart", {state: {imageUrl,id}});
+
+        navigate("/cart", { state: { productId: id} });
+    }
+
+    const buynow=(e)=>{
+        e.preventDefault();
+
+        navigate(`/checkout`)
     }
     return (
         <>
+            {/* {console.log(`http://localhost:5000/${data.image_url.replace(/\\/g, "/")}`)} */}
             {loading && <h1 className='font-bold text-2xl flex justify-center items-center h-screen'>Loading...</h1>}
 
             {!loading &&
                 <div className=" min-h-screen bg-black text-white flex justify-center items-center px-6">
                     <div className=" h-screen w-screen grid md:grid-cols-2 gap-8 items-center">
-
+                        {/* C:\Users\harsh\Desktop\Codes\Practice Projects\E-commerce\client\market\src\assets\productImages\bruno-van-der-kraan-VRERJ5Mjp4c-unsplash.jpg */}
                         <div className="w-2xl h-screen  flex justify-center mx-4">
                             <div className=" h-2/3 bg-black border border-gray-800 rounded-xl m-auto p-4">
                                 <img
-                                    src={imageUrl}
+                                    src={
+                                        data.image_url
+                                            ? `http://localhost:5000/${data.image_url.replace(/\\/g, "/")}`
+                                            : "https://via.placeholder.com/300x300?text=No+Image"
+                                    }
                                     alt="watch image"
                                     className="h-full rounded-lg object-contain"
                                 />
@@ -89,11 +102,12 @@ function ProductDetails() {
                             <div className="text-3xl font-semibold mt-4">&#8377; {data.price}</div>
 
                             <div className="flex gap-4 mt-6">
-                                <button className="bg-orange-500 text-black font-bold py-3 px-6 rounded-lg hover:bg-orange-600 transition">
+                                <button className="bg-orange-500 text-black font-bold py-3 px-6 rounded-lg hover:bg-orange-600 transition"
+                                    onClick={buynow}>
                                     BUY NOW
                                 </button>
-                                <button className="border border-gray-400 text-white font-semibold py-3 px-6 rounded-lg hover:bg-gray-800 transition" 
-                                onClick={addToCart}>
+                                <button className="border border-gray-400 text-white font-semibold py-3 px-6 rounded-lg hover:bg-gray-800 transition"
+                                    onClick={addToCart}>
                                     ADD TO CART
                                 </button>
                             </div>
