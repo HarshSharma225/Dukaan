@@ -29,7 +29,7 @@ function Login() {
             response.json().then((data)=>{
                 console.log(data)
                 if(data.message === "user found"){
-                    console.log("redirecting user...........")    //////////// redirect
+                    // console.log("redirecting user...........")    //////////// redirect
                     Cookies.set("userId",data.user._id,{path: "/"});
                     dispatch(setUser({id: data.user._id, name: data.user.name, email: data.user.email}));
                     navigate("/");

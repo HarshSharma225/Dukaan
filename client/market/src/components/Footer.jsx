@@ -4,12 +4,12 @@ function Footer() {
   return (
     <footer className="bg-black text-gray-300 py-8">
       <div className="max-w-6xl mx-auto px-4">
-        {/* Top Links */}
+
         <div className="flex flex-col md:flex-row justify-between items-center mb-6">
           <div className="flex space-x-6 text-sm font-medium">
-            <a href="#" className="hover:text-white">PRIVACY POLICY</a>
-            <a href="#" className="hover:text-white">TERMS OF SERVICE</a>
-            <a href="#" className="hover:text-white">CONTACT US</a>
+            <a href="" className="hover:text-white">PRIVACY POLICY</a>
+            <a href="" className="hover:text-white">TERMS OF SERVICE</a>
+            <a href="" className="hover:text-white">CONTACT US</a>
           </div>
           <div className="flex space-x-4 mt-4 md:mt-0">
             <a target='_blank' href="#" className="text-white text-lg hover:text-blue-400"><FaTwitter /></a>
@@ -18,18 +18,18 @@ function Footer() {
           </div>
         </div>
 
-        {/* Newsletter */}
+      
         <div className="text-center mb-6">
           <p className="text-gray-400 text-sm uppercase tracking-wide">NEWSLETTER SIGN UP</p>
         </div>
 
-        {/* Bottom Info */}
+     
         <div className="text-center text-gray-400 text-sm mb-4">
           <p>Dukaan by Harsh Sharma</p>
           <p>work.harshsharma.07@gmail.com</p>
         </div>
 
-        {/* Bottom Line */}
+      
         <div className="border-t border-orange-500 mt-4"></div>
       </div>
     </footer>

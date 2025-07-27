@@ -1,6 +1,16 @@
 import React from 'react'
 import logo from '../assets/logo.png'
+import { useSelector, useDispatch } from 'react-redux'
+import {logout} from "../redux/authSlice"
 function Header() {
+  const user = useSelector(state => state.auth.user)
+  const dispatch = useDispatch()
+
+  const handleLogout =(e)=>{
+    e.preventDefault();
+
+    dispatch(logout());
+  }
   return (
     <div>
         <header className="h-16 flex justify-between items-center px-8 py-6 bg-black">
@@ -11,6 +21,9 @@ function Header() {
           <a href="/item-list" className="hover:text-orange-400">Shop</a>
           <a href="/about" className="hover:text-orange-400">About</a>
           <a href="/contact" className="hover:text-orange-400">Contact</a>
+          {!user && <a href="/user/login" className="hover:text-orange-400">Login</a>}
+          {user && <a onClick={handleLogout} className="hover:text-orange-400">Logout</a>}
+          
         </nav>
       </header>
     </div>

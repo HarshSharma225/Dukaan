@@ -76,7 +76,7 @@ function ProductDetails() {
             {!loading &&
                 <div className=" min-h-screen bg-black text-white flex justify-center items-center px-6">
                     <div className=" h-screen w-screen grid md:grid-cols-2 gap-8 items-center">
-                        {/* C:\Users\harsh\Desktop\Codes\Practice Projects\E-commerce\client\market\src\assets\productImages\bruno-van-der-kraan-VRERJ5Mjp4c-unsplash.jpg */}
+                       
                         <div className="w-2xl h-screen  flex justify-center mx-4">
                             <div className=" h-2/3 bg-black border border-gray-800 rounded-xl m-auto p-4">
                                 <img

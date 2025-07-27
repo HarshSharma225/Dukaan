@@ -11,6 +11,9 @@ import Cart from './components/Cart'
 import CheckoutPage from './components/CheckoutPage'
 import AboutPage from './components/AboutPage'
 import ContactPage from './components/Contact'
+import Payment from './components/Payment'
+import ProtectedRoute from './components/ProtectedRoute'
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -34,11 +37,16 @@ const router = createBrowserRouter([
   },
   {
     path: "/cart",
-    element: <Cart/>
+    element: (<ProtectedRoute>
+                <Cart/>
+              </ProtectedRoute>
+              )
   },
   {
     path: "/checkout",
-    element: <CheckoutPage/>
+    element: (<ProtectedRoute>
+                <CheckoutPage/>
+              </ProtectedRoute>)
   },
   {
     path: "/about",
@@ -47,6 +55,14 @@ const router = createBrowserRouter([
   {
     path: "/contact",
     element: <ContactPage/>
+  },
+  {
+    path: "/payment",
+    element: (
+      <ProtectedRoute>
+        <Payment/>
+      </ProtectedRoute>
+    )
   }
 ])
 function App() {

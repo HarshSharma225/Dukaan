@@ -1,12 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
-// import { X } from "lucide-react";
 // import minilogo from "../assets/mini-logo.png"
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 
-const Cart = ({ onClose }) => {
+const Cart = () => {
   const navigate = useNavigate();
 
   const [products, setProducts] = useState([]);
@@ -17,7 +16,7 @@ const Cart = ({ onClose }) => {
   const productId = location.state || null;
   const userId = Cookies.get("userId")
   
-  console.log(productId)
+  // console.log(productId)
   // const getProductDetail = useCallback(async () => {
   //   try {
   //     fetch(`http://localhost:5000/product/${id}`, {
@@ -82,28 +81,22 @@ const Cart = ({ onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50">
-      {/* Cart Container */}
+   
       <div className="bg-black text-white rounded-lg w-full sm:w-[90%] md:w-[500px] lg:w-[500px] max-h-screen overflow-y-auto p-6 relative transition-transform transform">
-        {/* Close Button */}
+     
         <button
           onClick={handleCancle}
           className="absolute top-4 right-4 text-2xl hover:text-gray-400"
         >
-          {/* <X /> */}
+       
           X
         </button>
 
-        {/* Logo
-        <div className="bg-white text-3xl font-bold mb-4">
-          <img src={minilogo} alt="logo" className="size-18"/>
-        </div> */}
-
-        {/* Title */}
         <h1 className="text-3xl font-bold mb-6">Cart</h1>
 
         {products.map((item) => (
           <div key={item.product.name} className="flex justify-between items-center mb-6 border-b border-gray-800 pb-4">
-            {/* Image and Name */}
+        
             <div className="flex items-center gap-4">
               <img
                 src={`http://localhost:5000/${item.product.image_url.replace(/\\/g, "/")}`}
@@ -118,15 +111,10 @@ const Cart = ({ onClose }) => {
               </p>
             </div>
 
-            {/* Price */}
-            {/* {getTotal(item.product.price)} */}
+        
             <div className="text-lg font-bold">&#8377; {item.product.price}</div>
           </div>
         ))}
-        {/* Cart Item */}
-
-
-        {/* Promo Code */}
         <div className="flex justify-between items-center bg-gray-900 rounded-lg p-3 mb-6">
           <input
             type="text"
@@ -138,13 +126,11 @@ const Cart = ({ onClose }) => {
           </button>
         </div>
 
-        {/* Total */}
         <div className="flex justify-between items-center text-lg font-semibold mb-6">
           <span>Total</span>
           <span>&#8377; {totalCost}</span>
         </div>
 
-        {/* Checkout Button */}
         <button className="w-full bg-orange-500 text-black text-lg font-bold py-3 rounded-lg hover:bg-orange-600 transition" 
           onClick={buynow}>
           CHECKOUT
