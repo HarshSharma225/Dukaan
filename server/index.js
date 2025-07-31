@@ -15,13 +15,15 @@ const fs = require("fs");
 const secretkey = "radharani";
 
 const app = express()
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
 
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: process.env.NODE_ENV === 'production' 
+        ? ['https://your-frontend-domain.com', 'http://localhost:5173'] 
+        : "http://localhost:5173",
     credentials: true
 }));
 app.use(express.json());
