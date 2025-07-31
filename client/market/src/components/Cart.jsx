@@ -38,7 +38,7 @@ const Cart = () => {
 
   const getUserCartDetails = useCallback(async () => {
     // console.log(userId)
-    fetch(`https://dukaan-4.onrender.com/getCartItems/${userId}`, {
+    fetch(`https://dukaan-5.onrender.com/getCartItems/${userId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
@@ -99,7 +99,7 @@ const Cart = () => {
         
             <div className="flex items-center gap-4">
               <img
-                src={`https://dukaan-4.onrender.com/${item.product.image_url.replace(/\\/g, "/")}`}
+                src={`https://dukaan-5.onrender.com/${item.product.image_url.replace(/\\/g, "/")}`}
                 alt="Product"
                 className="w-16 h-16 rounded bg-gray-900 object-cover"
               />

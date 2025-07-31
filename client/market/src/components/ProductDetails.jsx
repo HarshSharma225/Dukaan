@@ -18,7 +18,7 @@ function ProductDetails() {
 
         const getProductDetails = async () => {
             try {
-                const response = await fetch(`https://dukaan-4.onrender.com/product/${id}`);
+                const response = await fetch(`https://dukaan-5.onrender.com/product/${id}`);
                 if (!response.ok) {
                     throw new Error(`Error: ${response.status}`);
                 }
@@ -40,7 +40,7 @@ function ProductDetails() {
         e.preventDefault();
 
         try {
-            fetch(`https://dukaan-4.onrender.com/user/${userId}/cart`, {
+            fetch(`https://dukaan-5.onrender.com/user/${userId}/cart`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -82,7 +82,7 @@ function ProductDetails() {
                                 <img
                                     src={
                                         data.image_url
-                                            ? `https://dukaan-4.onrender.com/${data.image_url.replace(/\\/g, "/")}`
+                                            ? `https://dukaan-5.onrender.com/${data.image_url.replace(/\\/g, "/")}`
                                             : "https://via.placeholder.com/300x300?text=No+Image"
                                     }
                                     alt="watch image"

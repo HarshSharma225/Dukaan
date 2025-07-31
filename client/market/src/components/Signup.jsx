@@ -9,7 +9,7 @@ function Signup() {
     const handleSubmit =async (e)=>{
         e.preventDefault();
 
-        fetch("https://dukaan-4.onrender.com/user/signup",{
+        fetch("https://dukaan-5.onrender.com/user/signup",{
             method: "POST",
             headers:{
                 "Content-Type": "application/json"

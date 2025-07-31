@@ -2,7 +2,7 @@
 const config = {
   // Development environment
   development: {
-    apiUrl: 'https://dukaan-4.onrender.com'
+    apiUrl: 'https://dukaan-5.onrender.com'
   },
   // Production environment
   production: {

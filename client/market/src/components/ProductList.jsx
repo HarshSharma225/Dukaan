@@ -11,7 +11,7 @@ function ProductList() {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await fetch("https://dukaan-4.onrender.com/products", {
+                const response = await fetch("https://dukaan-5.onrender.com/products", {
                     method: "GET",
                 });
                 const data = await response.json();
@@ -50,7 +50,7 @@ function ProductList() {
 
                                     <img
                                         className="w-1/2 h-32 object-cover mb-4 rounded border-1"
-                                        src={`https://dukaan-4.onrender.com/${item.image_url.replace(/\\/g, "/")}`}
+                                        src={`https://dukaan-5.onrender.com/${item.image_url.replace(/\\/g, "/")}`}
                                         alt={item.name}
                                     />
                                     <div className="font-semibold text-lg mb-2">{item.name}</div>
