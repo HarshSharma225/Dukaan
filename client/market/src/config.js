@@ -2,7 +2,7 @@
 const config = {
   // Development environment
   development: {
-    apiUrl: 'http://localhost:5000'
+    apiUrl: 'https://dukaan-4.onrender.com'
   },
   // Production environment
   production: {

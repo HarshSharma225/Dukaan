@@ -8,11 +8,12 @@ const cors = require("cors")
 const productlist = require("./productList.json")
 const path = require("path");
 const fs = require("fs");
+require('dotenv').config()
 // const path = require("path");
 
 
 
-const secretkey = "radharani";
+const secretkey = process.env.JWT_SECRET;
 
 const app = express()
 const port = process.env.PORT || 5000;

@@ -14,7 +14,7 @@ function Login() {
     const handleSubmit =async (e)=>{
         e.preventDefault();
 
-        fetch("http://localhost:5000/user/login",{
+        fetch("https://dukaan-4.onrender.com/user/login",{
             method: "POST",
             headers:{
                 "Content-Type": "application/json"

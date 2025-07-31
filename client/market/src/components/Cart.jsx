@@ -19,7 +19,7 @@ const Cart = () => {
   // console.log(productId)
   // const getProductDetail = useCallback(async () => {
   //   try {
-  //     fetch(`http://localhost:5000/product/${id}`, {
+  //     fetch(`/product/${id}`, {
   //       method: "GET",
   //       headers: {
   //         "Content-Type": "application/json",
@@ -38,7 +38,7 @@ const Cart = () => {
 
   const getUserCartDetails = useCallback(async () => {
     // console.log(userId)
-    fetch(`http://localhost:5000/getCartItems/${userId}`, {
+    fetch(`https://dukaan-4.onrender.com/getCartItems/${userId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
@@ -99,7 +99,7 @@ const Cart = () => {
         
             <div className="flex items-center gap-4">
               <img
-                src={`http://localhost:5000/${item.product.image_url.replace(/\\/g, "/")}`}
+                src={`https://dukaan-4.onrender.com/${item.product.image_url.replace(/\\/g, "/")}`}
                 alt="Product"
                 className="w-16 h-16 rounded bg-gray-900 object-cover"
               />
