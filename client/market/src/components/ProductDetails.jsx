@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import Cookies from "js-cookie";
+import { API_BASE_URL } from '../config';
 
 function ProductDetails() {
     const navigate = useNavigate();
@@ -18,7 +19,7 @@ function ProductDetails() {
 
         const getProductDetails = async () => {
             try {
-                const response = await fetch(`https://dukaan-5.onrender.com/product/${id}`);
+                const response = await fetch(`${API_BASE_URL}/product/${id}`);
                 if (!response.ok) {
                     throw new Error(`Error: ${response.status}`);
                 }
@@ -40,7 +41,7 @@ function ProductDetails() {
         e.preventDefault();
 
         try {
-            fetch(`https://dukaan-5.onrender.com/user/${userId}/cart`, {
+            fetch(`${API_BASE_URL}/user/${userId}/cart`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -82,7 +83,7 @@ function ProductDetails() {
                                 <img
                                     src={
                                         data.image_url
-                                            ? `https://dukaan-5.onrender.com/${data.image_url.replace(/\\/g, "/")}`
+                                            ? `${API_BASE_URL}/${data.image_url.replace(/\\/g, "/")}`
                                             : "https://via.placeholder.com/300x300?text=No+Image"
                                     }
                                     alt="watch image"

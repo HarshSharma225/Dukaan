@@ -37,8 +37,9 @@ Updated CORS to handle both development and production environments.
 4. **Environment Variables to set in Render:**
    ```
    NODE_ENV=production
-   MONGODB_URI=your_mongodb_connection_string
+   DB_URL=your_mongodb_connection_string
    JWT_SECRET=your_jwt_secret
+   FRONTEND_URL=https://your-frontend-domain.com
    ```
 
 5. **Important:** Make sure nodemon is in `dependencies` (not `devDependencies`) in your `package.json`

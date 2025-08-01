@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { setUser } from '../redux/userSlice';
 import { useNavigate } from 'react-router-dom';
 import Cookies from "js-cookie";
+import { API_BASE_URL } from '../config';
 
 function Login() {
     const dispatch = useDispatch();
@@ -14,7 +15,7 @@ function Login() {
     const handleSubmit =async (e)=>{
         e.preventDefault();
 
-        fetch("https://dukaan-5.onrender.com/user/login",{
+        fetch(`${API_BASE_URL}/user/login`,{
             method: "POST",
             headers:{
                 "Content-Type": "application/json"
