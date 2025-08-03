@@ -80,6 +80,30 @@ app.get("/",(req,res)=>{
     res.json({message: "Radhe Radhe"});
 })
 
+// Health check endpoint
+app.get("/health", async (req, res) => {
+    try {
+        // Check database connection
+        const dbStatus = mongoose.connection.readyState === 1 ? "connected" : "disconnected";
+        
+        // Check if we can query the database
+        const productCount = await Product.countDocuments();
+        
+        res.status(200).json({
+            status: "healthy",
+            database: dbStatus,
+            productCount: productCount,
+            timestamp: new Date().toISOString()
+        });
+    } catch (error) {
+        res.status(500).json({
+            status: "unhealthy",
+            error: error.message,
+            timestamp: new Date().toISOString()
+        });
+    }
+});
+
 //User --------------------------------------------------------------------------------------------------------
 
 app.post("/user/signup",async (req,res)=>{
@@ -139,8 +163,16 @@ app.post("/user/login",async(req,res)=>{
 //Products ------------------------------------------------------
 
 app.get("/products",async (req,res)=>{
-    const items = await Product.find();
-    res.status(200).json(items);
+    try {
+        const items = await Product.find();
+        res.status(200).json(items);
+    } catch (error) {
+        console.error("Error fetching products:", error);
+        res.status(500).json({ 
+            message: "Internal server error", 
+            error: error.message 
+        });
+    }
 })
 app.get("/product/:id",async (req,res)=>{
     const id = req.params.id;
@@ -221,8 +253,59 @@ app.post("/product/register",async(req,res)=>{
         res.status(200).send("Product registered successfully")
     }catch(error){
         console.log(`error in server/index.js:line:54 :: ${error}`)
+        res.status(500).json({ message: "Error registering product", error: error.message });
     }
 })
+
+// Endpoint to populate database with sample products
+app.post("/populate-products", async (req, res) => {
+    try {
+        // Check if products already exist
+        const existingProducts = await Product.find();
+        if (existingProducts.length > 0) {
+            return res.status(200).json({ 
+                message: "Products already exist in database", 
+                count: existingProducts.length 
+            });
+        }
+
+        // Import sample products from JSON file
+        const sampleProducts = require('./productList.json');
+        
+        // Add random image URLs to products
+        const imageFiles = [
+            'ahmadreza-rezaie-GsVSvlbjL3U-unsplash.jpg',
+            'bruno-van-der-kraan-VRERJ5Mjp4c-unsplash.jpg',
+            'daniel-hay-O703kpzIsQI-unsplash.jpg',
+            'daniel-korpai-hbTKIbuMmBI-unsplash.jpg',
+            'domino-studio-p2WUEFGrAdA-unsplash.jpg',
+            'fabian-heimann-4R_WEmhx8og-unsplash.jpg',
+            'ricky-kharawala-Yka2yhGJwjc-unsplash.jpg',
+            'robert-torres-uXMctv7UCu8-unsplash.jpg',
+            'shreesha-bhat-lz6z9GZu8hk-unsplash.jpg',
+            'yash-parashar-LWPPpkn6NEQ-unsplash.jpg'
+        ];
+
+        const productsWithImages = sampleProducts.map(product => ({
+            ...product,
+            image_url: `/assets/productImages/${imageFiles[Math.floor(Math.random() * imageFiles.length)]}`
+        }));
+
+        // Insert all products
+        await Product.insertMany(productsWithImages);
+        
+        res.status(200).json({ 
+            message: "Database populated with sample products", 
+            count: productsWithImages.length 
+        });
+    } catch (error) {
+        console.error("Error populating products:", error);
+        res.status(500).json({ 
+            message: "Error populating products", 
+            error: error.message 
+        });
+    }
+});
 app.post("/cart/increase", async (req, res) => {
     const { userId, productId } = req.body;
     try {

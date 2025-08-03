@@ -1,8 +1,23 @@
 const mongoose = require('mongoose');
 require('dotenv').config()
-const mongodb = mongoose.connect(process.env.DB_URL)
-                        .then(()=>console.log("database connected"))
-                        .catch((err)=>console.log(err))
+
+// Improved database connection with better error handling
+const connectDB = async () => {
+    try {
+        if (!process.env.DB_URL) {
+            throw new Error('DB_URL environment variable is not set');
+        }
+        
+        await mongoose.connect(process.env.DB_URL);
+        console.log("Database connected successfully");
+    } catch (error) {
+        console.error("Database connection error:", error.message);
+        process.exit(1); // Exit if database connection fails
+    }
+};
+
+// Connect to database
+connectDB();
 
 const UserSchema = new mongoose.Schema({
     name: {

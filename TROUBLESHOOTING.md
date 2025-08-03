@@ -1,148 +1,143 @@
-# Troubleshooting Guide for E-commerce App
+# Server 500 Error Troubleshooting Guide
 
-## ProductList Not Loading Products
+## Quick Diagnosis Steps
 
-### Issue Description
-The ProductList page shows a loading state indefinitely and doesn't display any products after deployment.
+### 1. Check Server Health
+Visit: `https://dukaan-5.onrender.com/health`
 
-### Root Causes & Solutions
+This will tell you:
+- If the server is running
+- Database connection status
+- Number of products in database
 
-#### 1. **API URL Configuration Issues** ✅ FIXED
-**Problem:** Components were using hardcoded URLs instead of environment-based configuration.
+### 2. Check Database Connection
+The most common cause of 500 errors is database connection issues.
 
-**Solution Applied:**
-- Updated all components to use `API_BASE_URL` from `src/config.js`
-- Fixed components: `ProductList.jsx`, `Signup.jsx`, `Login.jsx`, `ProductDetails.jsx`, `Cart.jsx`, `CheckoutPage.jsx`
+**Symptoms:**
+- 500 error on `/products` endpoint
+- Server logs show "Database connection error"
+- Health endpoint shows "database: disconnected"
 
-#### 2. **CORS Configuration Issues**
-**Problem:** Frontend can't access backend due to CORS restrictions.
+**Solutions:**
+1. Check your `DB_URL` environment variable in Render dashboard
+2. Ensure MongoDB Atlas cluster is running
+3. Verify network access and IP whitelist settings
 
-**Check:**
-- Verify `FRONTEND_URL` environment variable is set correctly in Render
-- Ensure the frontend domain is included in the CORS allowed origins
+### 3. Check Environment Variables
+In your Render dashboard, ensure these environment variables are set:
 
-**Solution:**
-```javascript
-// In server/index.js
-app.use(cors({
-    origin: process.env.NODE_ENV === 'production' 
-        ? [process.env.FRONTEND_URL || 'https://your-frontend-domain.com', 'http://localhost:5173'] 
-        : "http://localhost:5173",
-    credentials: true
-}));
 ```
-
-#### 3. **Database Connection Issues**
-**Problem:** Backend can't connect to MongoDB, so `/products` endpoint fails.
-
-**Check:**
-- Verify `DB_URL` environment variable is set in Render
-- Check if MongoDB Atlas cluster is accessible
-- Ensure IP whitelist includes Render's IP addresses
-
-**Debug Steps:**
-1. Check Render logs for database connection errors
-2. Test MongoDB connection string locally
-3. Verify MongoDB Atlas network access settings
-
-#### 4. **Environment Variables Not Set**
-**Problem:** Required environment variables are missing in Render.
-
-**Required Variables:**
-```
-NODE_ENV=production
 DB_URL=mongodb+srv://username:password@cluster.mongodb.net/database
 JWT_SECRET=your_secret_key
 FRONTEND_URL=https://your-frontend-domain.com
 ```
 
-#### 5. **Backend Service Not Running**
-**Problem:** The backend service is down or not responding.
+### 4. Populate Database
+If the database is empty, populate it with sample data:
 
-**Check:**
-- Verify Render service status
-- Check if `npm start` command is working
-- Review Render deployment logs
+```bash
+curl -X POST https://dukaan-5.onrender.com/populate-products
+```
 
-### Debugging Steps
+Or visit: `https://dukaan-5.onrender.com/populate-products` in your browser
 
-#### 1. **Check Browser Network Tab**
-1. Open browser developer tools
-2. Go to Network tab
-3. Refresh the ProductList page
-4. Look for failed requests to `/products` endpoint
-5. Check response status and error messages
+## Common Issues and Solutions
 
-#### 2. **Check Render Logs**
-1. Go to your Render dashboard
-2. Click on your backend service
-3. Go to "Logs" tab
-4. Look for:
-   - Database connection errors
-   - Server startup errors
-   - API request errors
+### Issue 1: Database Connection Failed
+**Error:** "Database connection error: DB_URL environment variable is not set"
 
-#### 3. **Test API Endpoint Directly**
-1. Try accessing `https://your-backend-domain.onrender.com/products` directly in browser
-2. Check if it returns JSON data or an error
+**Solution:**
+1. Go to Render dashboard → Your service → Environment
+2. Add `DB_URL` variable with your MongoDB connection string
+3. Redeploy the service
 
-#### 4. **Verify Environment Configuration**
-1. Check if `src/config.js` has correct API URL
-2. Verify environment variables in Render dashboard
-3. Ensure frontend is using the correct environment
+### Issue 2: Empty Database
+**Error:** `/products` returns empty array or 500 error
 
-### Common Error Messages & Solutions
+**Solution:**
+1. Call the populate endpoint: `POST /populate-products`
+2. Verify products exist: `GET /health`
 
-#### "Failed to fetch" Error
-- **Cause:** CORS issue or backend not accessible
-- **Solution:** Check CORS configuration and backend status
+### Issue 3: CORS Issues
+**Error:** Frontend can't access backend
 
-#### "Network Error" 
-- **Cause:** Backend service down
-- **Solution:** Check Render service status and logs
+**Solution:**
+1. Check CORS configuration in `server/index.js`
+2. Ensure `FRONTEND_URL` is set correctly
+3. Verify frontend domain is in allowed origins
 
-#### "404 Not Found"
-- **Cause:** Wrong API endpoint or backend not deployed
-- **Solution:** Verify endpoint URL and backend deployment
+### Issue 4: MongoDB Atlas Issues
+**Error:** "MongoServerError: Authentication failed"
 
-#### "500 Internal Server Error"
-- **Cause:** Backend error (database, code issue)
-- **Solution:** Check Render logs for specific error details
+**Solutions:**
+1. Check username/password in connection string
+2. Verify database user has correct permissions
+3. Check if IP address is whitelisted in MongoDB Atlas
 
-### Quick Fix Checklist
+## Debugging Commands
 
-- [ ] All components use `API_BASE_URL` instead of hardcoded URLs
-- [ ] `DB_URL` environment variable is set in Render
-- [ ] `JWT_SECRET` environment variable is set in Render
-- [ ] `FRONTEND_URL` environment variable is set in Render
-- [ ] MongoDB Atlas is accessible from Render
-- [ ] Backend service is running and healthy
-- [ ] CORS configuration allows frontend domain
-- [ ] Frontend is deployed and accessible
+### Test Database Connection
+```bash
+curl https://dukaan-5.onrender.com/health
+```
 
-### Testing Locally
+### Test Products Endpoint
+```bash
+curl https://dukaan-5.onrender.com/products
+```
 
-To test if the issue is deployment-specific:
+### Populate Database
+```bash
+curl -X POST https://dukaan-5.onrender.com/populate-products
+```
 
-1. **Test Backend Locally:**
-   ```bash
-   cd server
-   npm start
-   curl http://localhost:5000/products
-   ```
+## Render Deployment Checklist
 
-2. **Test Frontend Locally:**
-   ```bash
-   cd client/market
-   npm run dev
-   ```
-   - Update `src/config.js` to use `http://localhost:5000` for development
-   - Check if products load correctly
+- [ ] Environment variables are set in Render dashboard
+- [ ] Build command is correct: `npm install`
+- [ ] Start command is correct: `npm start`
+- [ ] Port is set to `process.env.PORT`
+- [ ] Service is deployed and running
 
-### Still Having Issues?
+## Local Development Testing
 
-If the problem persists after following these steps:
+1. Create `.env` file in server directory:
+```
+DB_URL=your_mongodb_connection_string
+JWT_SECRET=your_secret_key
+PORT=5000
+```
 
-1. **Check Render Status Page:** Ensure Render services are operational
-2. **Review Recent Changes:** Check if recent code changes introduced the issue
-3. **Contact Support:** If all else fails, contact Render support with your service logs 
+2. Install dependencies:
+```bash
+cd server
+npm install
+```
+
+3. Start server:
+```bash
+npm start
+```
+
+4. Test endpoints:
+```bash
+curl http://localhost:5000/health
+curl http://localhost:5000/products
+```
+
+## Emergency Fixes
+
+### If nothing works, try this minimal setup:
+
+1. **Reset environment variables** in Render
+2. **Redeploy the service**
+3. **Check Render logs** for specific error messages
+4. **Test with health endpoint** first
+5. **Populate database** if needed
+
+### Contact Support
+If issues persist:
+1. Check Render service logs
+2. Verify MongoDB Atlas status
+3. Test with minimal configuration
+4. Consider recreating the service if necessary 
