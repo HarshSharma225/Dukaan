@@ -1,5 +1,36 @@
 # Server 500 Error Troubleshooting Guide
 
+## 🚨 URGENT: MongoDB Connection String Error
+
+If you see this error: **"Invalid scheme, expected connection string to start with 'mongodb://' or 'mongodb+srv://'"**
+
+### Quick Fix:
+1. Go to your **Render dashboard**
+2. Click on your **backend service**
+3. Go to **"Environment"** tab
+4. Find the **DB_URL** variable
+5. Make sure it starts with `mongodb+srv://` or `mongodb://`
+
+### Correct DB_URL Format:
+```
+mongodb+srv://username:password@cluster.mongodb.net/database_name
+```
+
+### Common Mistakes:
+- ❌ `https://cluster.mongodb.net` (wrong protocol)
+- ❌ `mongodb://cluster.mongodb.net` (missing credentials)
+- ❌ `mongodb+srv://username@cluster.mongodb.net` (missing password)
+- ✅ `mongodb+srv://username:password@cluster.mongodb.net/database`
+
+### Test Your Connection:
+Run this command locally to test your connection string:
+```bash
+cd server
+node test-db-connection.js
+```
+
+---
+
 ## Quick Diagnosis Steps
 
 ### 1. Check Server Health
