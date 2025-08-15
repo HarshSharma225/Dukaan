@@ -1,12 +1,7 @@
-<<<<<<< HEAD
 import React, { useState } from 'react'
 import BASE_URL from '../const/baseurl.js';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-=======
-import React,{ useState } from 'react'
-import { API_BASE_URL } from '../config';
->>>>>>> c4a44c4a3f30699930123a4c1c37880eab50fc5e
 
 
 function Signup() {
@@ -19,11 +14,7 @@ function Signup() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-<<<<<<< HEAD
         fetch(`${BASE_URL}/user/signup`, {
-=======
-        fetch(`${API_BASE_URL}/user/signup`,{
->>>>>>> c4a44c4a3f30699930123a4c1c37880eab50fc5e
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

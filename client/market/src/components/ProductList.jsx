@@ -2,11 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom';
 import { setproducts, setloading, seterror } from '../redux/productSlice'
-<<<<<<< HEAD
 import BASE_URL from '../const/baseurl.js';
-=======
-import { API_BASE_URL } from '../config';
->>>>>>> c4a44c4a3f30699930123a4c1c37880eab50fc5e
 function ProductList() {
     const images = import.meta.glob("/src/assets/productImages/*.{jpg,jpeg,png}", { eager: true });
     const imageList = Object.values(images).map(img => img.default);
@@ -16,11 +12,7 @@ function ProductList() {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-<<<<<<< HEAD
                 const response = await fetch(`${BASE_URL}/products`, {
-=======
-                const response = await fetch(`${API_BASE_URL}/products`, {
->>>>>>> c4a44c4a3f30699930123a4c1c37880eab50fc5e
                     method: "GET",
                 });
                 const data = await response.json();
@@ -37,13 +29,6 @@ function ProductList() {
 
     }, [])
 
-    // const randomImage = () => {
-    //     if (imageList.length === 0) return null;
-    //     const idx = Math.floor(Math.random() * imageList.length);
-    //     return imageList[idx];
-    // };
-
-
     return (
         <div>
             {loading && <h1 className='font-bold text-2xl flex justify-center items-center h-screen'>Loading...</h1>}
@@ -51,7 +36,6 @@ function ProductList() {
             {!loading &&
                 <div className="bg-black w-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-2">
                     {products.map((item) => {
-                        // const image = randomImage();
 
                         return (
                             <Link key={item._id} to={`/item-detail/${item._id}`}>
@@ -59,11 +43,7 @@ function ProductList() {
 
                                     <img
                                         className="w-1/2 h-32 object-cover mb-4 rounded border-1"
-<<<<<<< HEAD
                                         src={`${BASE_URL}/${item.image_url.replace(/\\/g, "/")}`}
-=======
-                                        src={`${API_BASE_URL}/${item.image_url.replace(/\\/g, "/")}`}
->>>>>>> c4a44c4a3f30699930123a4c1c37880eab50fc5e
                                         alt={item.name}
                                     />
                                     <div className="font-semibold text-lg mb-2">{item.name}</div>

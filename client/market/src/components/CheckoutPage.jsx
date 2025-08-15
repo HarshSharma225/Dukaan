@@ -1,14 +1,6 @@
 import React, { useEffect, useState } from "react";
-// import { Minus, Plus, X } from "lucide-react";
 import Cookies from "js-cookie"
-<<<<<<< HEAD
-import { Routes,useNavigate } from "react-router-dom";
 import BASE_URL from "../const/baseurl.js";
-
-=======
-import { Routes } from "react-router-dom";
-import { API_BASE_URL } from "../config";
->>>>>>> c4a44c4a3f30699930123a4c1c37880eab50fc5e
 
 const CheckoutPage = () => {
     const userId = Cookies.get("userId")
@@ -17,11 +9,7 @@ const CheckoutPage = () => {
 
     useEffect(() => {
         try {
-<<<<<<< HEAD
             fetch(`${BASE_URL}/getCartItems/${userId}`, {
-=======
-            fetch(`${API_BASE_URL}/getCartItems/${userId}`, {
->>>>>>> c4a44c4a3f30699930123a4c1c37880eab50fc5e
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json"
@@ -47,11 +35,7 @@ const CheckoutPage = () => {
     const handleQuantityChange = async (productId, change) => {
         const route = change === 1 ? "/cart/increase" : "/cart/decrease";
         try {
-<<<<<<< HEAD
             const response = await fetch(`${BASE_URL}${route}`, {
-=======
-            const response = await fetch(`${API_BASE_URL}${route}`, {
->>>>>>> c4a44c4a3f30699930123a4c1c37880eab50fc5e
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ userId, productId })
@@ -91,11 +75,7 @@ const CheckoutPage = () => {
                         {/* Left Section - Product Image */}
                         <div className="flex justify-center items-center bg-gray-900 rounded-xl min-h-48 w-full md:w-1/2">
                             <img
-<<<<<<< HEAD
-                                src={`${BASE_URL}/${item.product.image_url.replace(/\\/g, "/")}`} // replace with actual image path
-=======
-                                src={`${API_BASE_URL}/${item.product.image_url.replace(/\\/g, "/")}`} // replace with actual image path
->>>>>>> c4a44c4a3f30699930123a4c1c37880eab50fc5e
+                                src={`${BASE_URL}/${item.product.image_url.replace(/\\/g, "/")}`}
                                 alt="Watch Image"
                                 className="w-28  md:w-36"
                             />
