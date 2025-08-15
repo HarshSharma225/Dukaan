@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import Cookies from "js-cookie";
+<<<<<<< HEAD
 import BASE_URL from '../const/baseurl.js';
+=======
+import { API_BASE_URL } from '../config';
+>>>>>>> c4a44c4a3f30699930123a4c1c37880eab50fc5e
 
 function ProductDetails() {
     const navigate = useNavigate();
@@ -19,7 +23,11 @@ function ProductDetails() {
 
         const getProductDetails = async () => {
             try {
+<<<<<<< HEAD
                 const response = await fetch(`${BASE_URL}/product/${id}`);
+=======
+                const response = await fetch(`${API_BASE_URL}/product/${id}`);
+>>>>>>> c4a44c4a3f30699930123a4c1c37880eab50fc5e
                 if (!response.ok) {
                     throw new Error(`Error: ${response.status}`);
                 }
@@ -41,7 +49,11 @@ function ProductDetails() {
         e.preventDefault();
 
         try {
+<<<<<<< HEAD
             fetch(`${BASE_URL}/user/${userId}/cart`, {
+=======
+            fetch(`${API_BASE_URL}/user/${userId}/cart`, {
+>>>>>>> c4a44c4a3f30699930123a4c1c37880eab50fc5e
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -82,7 +94,11 @@ function ProductDetails() {
                                 <img
                                     src={
                                         data.image_url
+<<<<<<< HEAD
                                             ? `${BASE_URL}/${data.image_url.replace(/\\/g, "/")}`
+=======
+                                            ? `${API_BASE_URL}/${data.image_url.replace(/\\/g, "/")}`
+>>>>>>> c4a44c4a3f30699930123a4c1c37880eab50fc5e
                                             : "https://via.placeholder.com/300x300?text=No+Image"
                                     }
                                     alt="watch image"

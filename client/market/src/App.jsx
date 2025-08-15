@@ -2,7 +2,7 @@ import {createBrowserRouter,RouterProvider} from "react-router-dom"
 import Signup from './components/Signup.jsx'
 import Login from './components/Login.jsx'
 import Home from './components/Home.jsx'
-import Header from "./components/header.jsx"
+import Header from "./components/Header.jsx"
 import Footer from './components/Footer.jsx'
 import ProductList from './components/ProductList.jsx'
 import ProductDetails from './components/ProductDetails.jsx'

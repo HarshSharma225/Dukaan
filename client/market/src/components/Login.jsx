@@ -3,7 +3,11 @@ import { useDispatch } from 'react-redux';
 import { setUser } from '../redux/userSlice';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import Cookies from "js-cookie";
+<<<<<<< HEAD
 import BASE_URL from '../const/baseurl.js';
+=======
+import { API_BASE_URL } from '../config';
+>>>>>>> c4a44c4a3f30699930123a4c1c37880eab50fc5e
 
 function Login() {
     const dispatch = useDispatch();
@@ -15,7 +19,11 @@ function Login() {
     const handleSubmit =async (e)=>{
         e.preventDefault();
 
+<<<<<<< HEAD
         fetch(`${BASE_URL}/user/login`,{
+=======
+        fetch(`${API_BASE_URL}/user/login`,{
+>>>>>>> c4a44c4a3f30699930123a4c1c37880eab50fc5e
             method: "POST",
             headers:{
                 "Content-Type": "application/json"

@@ -3,8 +3,15 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+<<<<<<< HEAD
     "dev": "nodemon index.js",
     "start": "node index.js"
+=======
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test-db": "node test-db-connection.js"
+>>>>>>> c4a44c4a3f30699930123a4c1c37880eab50fc5e
   },
   "author": "",
   "license": "ISC",
