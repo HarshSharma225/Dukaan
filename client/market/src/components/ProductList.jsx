@@ -16,7 +16,8 @@ function ProductList() {
                     method: "GET",
                 });
                 const data = await response.json();
-                dispatch(setproducts(data));
+                const safeArray = Array.isArray(data) ? data : [];
+                dispatch(setproducts(safeArray));
                 dispatch(setloading(false))
             } catch (error) {
                 dispatch(seterror(error))
@@ -35,7 +36,7 @@ function ProductList() {
 
             {!loading &&
                 <div className="bg-black w-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-2">
-                    {products.map((item) => {
+                    {(Array.isArray(products) ? products : []).map((item) => {
 
                         return (
                             <Link key={item._id} to={`/item-detail/${item._id}`}>

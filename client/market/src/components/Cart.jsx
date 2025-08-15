@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import BASE_URL from "../const/baseurl.js";
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ const Cart = () => {
 
   const getUserCartDetails = useCallback(async () => {
     // console.log(userId)
-    fetch(`http://localhost:5000/getCartItems/${userId}`, {
+    fetch(`${BASE_URL}/getCartItems/${userId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
@@ -23,7 +24,7 @@ const Cart = () => {
     }).then((response) => {
       response.json().then((data) => {
         // console.log("line 46",data)
-        setProducts(data);
+        setProducts(Array.isArray(data) ? data : []);
       })
     }).catch((err)=> {
       console.log("error in client/component/cart line 45:: ", err)
@@ -32,8 +33,8 @@ const Cart = () => {
 
   useEffect(() => {
     let sum = 0;
-    products.forEach(item => {
-      sum += item.product.price;
+    (Array.isArray(products) ? products : []).forEach(item => {
+      sum += item?.product?.price ?? 0;
     });
     setTotalCost(sum);
   }, [products]);
@@ -71,12 +72,12 @@ const Cart = () => {
 
         <h1 className="text-3xl font-bold mb-6">Cart</h1>
 
-        {products.map((item) => (
+        {(Array.isArray(products) ? products : []).map((item) => (
           <div key={item.product.name} className="flex justify-between items-center mb-6 border-b border-gray-800 pb-4">
         
             <div className="flex items-center gap-4">
               <img
-                src={`http://localhost:5000/${item.product.image_url.replace(/\\/g, "/")}`}
+                src={`${BASE_URL}/${item.product.image_url.replace(/\\/g, "/")}`}
                 alt="Product"
                 className="w-16 h-16 rounded bg-gray-900 object-cover"
               />
