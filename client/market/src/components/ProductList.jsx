@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom';
 import { setproducts, setloading, seterror } from '../redux/productSlice'
+import BASE_URL from '../const/baseurl.js';
 function ProductList() {
     const images = import.meta.glob("/src/assets/productImages/*.{jpg,jpeg,png}", { eager: true });
     const imageList = Object.values(images).map(img => img.default);
@@ -11,7 +12,7 @@ function ProductList() {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await fetch("http://localhost:5000/products", {
+                const response = await fetch(`${BASE_URL}/products`, {
                     method: "GET",
                 });
                 const data = await response.json();
@@ -50,7 +51,7 @@ function ProductList() {
 
                                     <img
                                         className="w-1/2 h-32 object-cover mb-4 rounded border-1"
-                                        src={`http://localhost:5000/${item.image_url.replace(/\\/g, "/")}`}
+                                        src={`${BASE_URL}/${item.image_url.replace(/\\/g, "/")}`}
                                         alt={item.name}
                                     />
                                     <div className="font-semibold text-lg mb-2">{item.name}</div>

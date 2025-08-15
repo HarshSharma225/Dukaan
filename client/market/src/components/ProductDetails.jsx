@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import Cookies from "js-cookie";
+import BASE_URL from '../const/baseurl.js';
 
 function ProductDetails() {
     const navigate = useNavigate();
@@ -18,7 +19,7 @@ function ProductDetails() {
 
         const getProductDetails = async () => {
             try {
-                const response = await fetch(`http://localhost:5000/product/${id}`);
+                const response = await fetch(`${BASE_URL}/product/${id}`);
                 if (!response.ok) {
                     throw new Error(`Error: ${response.status}`);
                 }
@@ -40,7 +41,7 @@ function ProductDetails() {
         e.preventDefault();
 
         try {
-            fetch(`http://localhost:5000/user/${userId}/cart`, {
+            fetch(`${BASE_URL}/user/${userId}/cart`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -70,7 +71,6 @@ function ProductDetails() {
     }
     return (
         <>
-            {/* {console.log(`http://localhost:5000/${data.image_url.replace(/\\/g, "/")}`)} */}
             {loading && <h1 className='font-bold text-2xl flex justify-center items-center h-screen'>Loading...</h1>}
 
             {!loading &&
@@ -82,7 +82,7 @@ function ProductDetails() {
                                 <img
                                     src={
                                         data.image_url
-                                            ? `http://localhost:5000/${data.image_url.replace(/\\/g, "/")}`
+                                            ? `${BASE_URL}/${data.image_url.replace(/\\/g, "/")}`
                                             : "https://via.placeholder.com/300x300?text=No+Image"
                                     }
                                     alt="watch image"

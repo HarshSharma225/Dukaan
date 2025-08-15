@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const mongodb = mongoose.connect('mongodb://localhost:27017/ecommerce')
+require("dotenv").config();
+const mongodb = mongoose.connect(process.env.MONGO_URI)
                         .then(()=>console.log("database connected"))
                         .catch((err)=>console.log(err))
 

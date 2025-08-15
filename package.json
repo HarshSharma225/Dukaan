@@ -1,0 +1,12 @@
+{
+  "name": "dukaan",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm install --prefix server && npm install --prefix client/market && npm run build --prefix client/market",
+    "start": "npm run start --prefix server"
+  }, 
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

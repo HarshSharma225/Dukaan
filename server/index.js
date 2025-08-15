@@ -5,17 +5,17 @@ const jwt = require("jsonwebtoken");
 const {User,Product} = require("./mongodb/user");
 const cookieParser = require("cookie-parser");
 const cors = require("cors")
-const productlist = require("./productList.json")
-const path = require("path");
+const productlist = require("./productList.json")  
 const fs = require("fs");
-// const path = require("path");
+const path = require("path");
+const dotenv = require("dotenv")
 
+dotenv.config();
 
-
-const secretkey = "radharani";
+const secretkey = process.env.JWT_SECRET_KEY;
 
 const app = express()
-const port = 5000;
+const port = process.env.PORT;
 
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
@@ -36,20 +36,30 @@ app.get("/",(req,res)=>{
 app.post("/user/signup",async (req,res)=>{
     const {name,email,password} = req.body;
     console.log(name,email,password)
-    if(!email||!name||!password) console.log("Enter name, email and password")
+    
+    if(!email||!name||!password) {
+        console.log("Enter name, email and password")
+        return res.status(400).json({message: "Please provide name, email and password"})
+    }
 
-    else{
-        try {
-            const hash = await bcrypt.hash(password,8);
-
-            const newUser = new User({name,email,password:hash});
-            await newUser.save();
-
-            res.status(201).json({message: `user ${name} registered successfully`})
-        } catch (error) {
-            console.log(`error in server/index.js:line:30 :: ${error}`)
+    try {
+        const existingUser = await User.findOne({email})
+        console.log(existingUser)
+        
+        if(existingUser) {
+            return res.status(400).json({message:`User with email ${email} already exists`})
         }
-    }    
+        
+        const hash = await bcrypt.hash(password,8);
+        const newUser = new User({name,email,password:hash});
+        await newUser.save();
+
+        return res.status(201).json({message: `User ${name} registered successfully`})
+        
+    } catch (error) {
+        console.log(`error in server/index.js signup route :: ${error}`)
+        return res.status(500).json({message: "Internal server error during registration"})
+    }   
 })
 app.post("/user/login",async(req,res)=>{
     const {email,password} = req.body;
@@ -239,6 +249,13 @@ app.post("/cart/decrease", async (req, res) => {
 //     }
 // });
 
+if(process.env.NODE_ENV === "production"){
+    app.use(express.static(path.join(__dirname,"../../client/market/dist")));
+
+    app.get("*",(req,res)=>{
+        res.sendFile(path.join(__dirname,"../../client/market/dist/index.html"));
+    })
+}
 
 
 app.listen(port,()=> console.log(`server listing on port ${port}`))

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie"
 import { Routes,useNavigate } from "react-router-dom";
+import BASE_URL from "../const/baseurl.js";
 
 
 const CheckoutPage = () => {
@@ -11,7 +12,7 @@ const CheckoutPage = () => {
 
     useEffect(() => {
         try {
-            fetch(`http://localhost:5000/getCartItems/${userId}`, {
+            fetch(`${BASE_URL}/getCartItems/${userId}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json"
@@ -37,7 +38,7 @@ const CheckoutPage = () => {
     const handleQuantityChange = async (productId, change) => {
         const route = change === 1 ? "/cart/increase" : "/cart/decrease";
         try {
-            const response = await fetch(`http://localhost:5000${route}`, {
+            const response = await fetch(`${BASE_URL}${route}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ userId, productId })
@@ -88,7 +89,7 @@ const CheckoutPage = () => {
                       
                         <div className="flex justify-center items-center bg-gray-900 rounded-xl min-h-48 w-full md:w-1/2">
                             <img
-                                src={`http://localhost:5000/${item.product.image_url.replace(/\\/g, "/")}`} // replace with actual image path
+                                src={`${BASE_URL}/${item.product.image_url.replace(/\\/g, "/")}`} // replace with actual image path
                                 alt="Watch Image"
                                 className="w-28  md:w-36"
                             />

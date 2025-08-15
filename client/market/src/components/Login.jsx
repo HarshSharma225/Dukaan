@@ -1,8 +1,9 @@
 import React,{useState} from 'react'
 import { useDispatch } from 'react-redux';
 import { setUser } from '../redux/userSlice';
-import { useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import Cookies from "js-cookie";
+import BASE_URL from '../const/baseurl.js';
 
 function Login() {
     const dispatch = useDispatch();
@@ -14,7 +15,7 @@ function Login() {
     const handleSubmit =async (e)=>{
         e.preventDefault();
 
-        fetch("http://localhost:5000/user/login",{
+        fetch(`${BASE_URL}/user/login`,{
             method: "POST",
             headers:{
                 "Content-Type": "application/json"
@@ -41,7 +42,14 @@ function Login() {
 
     return (
         <div className='h-screen w-screen flex flex-col justify-center items-center'>
-            <h1 className='text-2xl font-bold mb-8'>Login</h1>
+            <h1 className='text-3xl font-bold '>Login</h1>
+
+            <div className='mt-0 mb-6'>
+                <Link to="/user/signup">
+                    <span className='text-blue-700 font-bold hover:text-blue-800 active:font-extrabold'>Signup</span>
+                </Link>
+            </div>
+
             <div className='h-fit w-1/4 flex'>
                 <form className="mx-auto w-full h-full flex flex-col justify-center" onSubmit={handleSubmit}>
                     <div className="mb-5">
@@ -59,7 +67,7 @@ function Login() {
                 </form>
             </div>
 
-
+            
         </div>
     )
 }

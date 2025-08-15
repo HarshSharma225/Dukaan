@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import BASE_URL from "../const/baseurl.js";
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ const Cart = () => {
   // console.log(productId)
   // const getProductDetail = useCallback(async () => {
   //   try {
-  //     fetch(`http://localhost:5000/product/${id}`, {
+  //     fetch(`${BASE_URL}/product/${id}`, {
   //       method: "GET",
   //       headers: {
   //         "Content-Type": "application/json",
@@ -38,7 +39,7 @@ const Cart = () => {
 
   const getUserCartDetails = useCallback(async () => {
     // console.log(userId)
-    fetch(`http://localhost:5000/getCartItems/${userId}`, {
+    fetch(`${BASE_URL}/getCartItems/${userId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
@@ -99,7 +100,7 @@ const Cart = () => {
         
             <div className="flex items-center gap-4">
               <img
-                src={`http://localhost:5000/${item.product.image_url.replace(/\\/g, "/")}`}
+                src={`${BASE_URL}/${item.product.image_url.replace(/\\/g, "/")}`}
                 alt="Product"
                 className="w-16 h-16 rounded bg-gray-900 object-cover"
               />
