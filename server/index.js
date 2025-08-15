@@ -36,10 +36,6 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(cookieParser());
 
-app.get("/",(req,res)=>{
-    res.json({message: "Radhe Radhe"});
-})
-
 app.get("/health", async (req, res) => {
     try {
         const dbStatus = mongoose.connection.readyState === 1 ? "connected" : "disconnected";
@@ -332,10 +328,10 @@ app.post("/cart/decrease", async (req, res) => {
 // });
 
 if(process.env.NODE_ENV === "production"){
-    app.use(express.static(path.join(__dirname,"../../client/market/dist")));
+    app.use(express.static(path.join(__dirname,"../client/market/dist")));
 
     app.get("*",(req,res)=>{
-        res.sendFile(path.join(__dirname,"../../client/market/dist/index.html"));
+        res.sendFile(path.join(__dirname,"../client/market/dist/index.html"));
     })
 }
 

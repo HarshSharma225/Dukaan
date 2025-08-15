@@ -4,7 +4,9 @@
   "main": "index.js",
   "scripts": {
     "build": "npm install --prefix server && npm install --prefix client/market && npm run build --prefix client/market",
-    "start": "npm run start --prefix server"
+    "start": "npm run start --prefix server",
+    "start:prod": "NODE_ENV=production npm start",
+    "start:prod:win": "set NODE_ENV=production && npm start"
   }, 
   "author": "",
   "license": "ISC",
