@@ -7,28 +7,15 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors")
 const productlist = require("./productList.json")  
 const fs = require("fs");
-<<<<<<< HEAD
 const path = require("path");
 const dotenv = require("dotenv")
-=======
-require('dotenv').config()
-// const path = require("path");
->>>>>>> c4a44c4a3f30699930123a4c1c37880eab50fc5e
 
 dotenv.config();
-
-<<<<<<< HEAD
-const secretkey = process.env.JWT_SECRET_KEY;
-
-const app = express()
-const port = process.env.PORT;
-=======
 
 const secretkey = process.env.JWT_SECRET;
 
 const app = express()
 const port = process.env.PORT || 5000;
->>>>>>> c4a44c4a3f30699930123a4c1c37880eab50fc5e
 
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 

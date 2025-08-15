@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from "react";
-// import minilogo from "../assets/mini-logo.png"
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Cookies from "js-cookie";
@@ -9,32 +8,10 @@ const Cart = () => {
   const navigate = useNavigate();
 
   const [products, setProducts] = useState([]);
-  // const [productName, setProductName] = useState();
-  // const [productPrice, setProductPrice] = useState();
   const [totalCost,setTotalCost] = useState(0);
   const location = useLocation()
   const productId = location.state || null;
   const userId = Cookies.get("userId")
-  
-  // console.log(productId)
-  // const getProductDetail = useCallback(async () => {
-  //   try {
-  //     fetch(`http://localhost:5000/product/${id}`, {
-  //       method: "GET",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       }
-  //     }).then((response) => {
-  //       response.json().then((data) => {
-  //         // console.log(data)
-  //         setProductName(data.name);
-  //         setProductPrice(data.price);
-  //       })
-  //     })
-  //   } catch (error) {
-  //     console.log("error in client/component/cart line 22:: ", error)
-  //   }
-  // }, [id])
 
   const getUserCartDetails = useCallback(async () => {
     // console.log(userId)
