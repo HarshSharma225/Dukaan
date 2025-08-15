@@ -20,51 +20,12 @@ const port = process.env.PORT || 5000;
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
 app.use(cors({
-    origin: true, // Allow all origins
+    origin: true, 
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
 
-// CORS configuration for development and production
-// const corsOptions = {
-//     origin: function (origin, callback) {
-//         // Allow requests with no origin (like mobile apps or curl requests)
-//         if (!origin) return callback(null, true);
-        
-//         const allowedOrigins = [
-//             'http://localhost:5173',  // Development
-//             'http://localhost:3000',  // Alternative dev port
-//             'https://dukaan-5.onrender.com', // Your backend domain
-//             process.env.FRONTEND_URL // Production frontend URL
-//         ].filter(Boolean); // Remove undefined values
-        
-//         if (allowedOrigins.indexOf(origin) !== -1 || process.env.NODE_ENV !== 'production') {
-//             callback(null, true);
-//         } else {
-//             console.log('CORS blocked origin:', origin);
-//             callback(new Error('Not allowed by CORS'));
-//         }
-//     },
-//     credentials: true,
-//     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-//     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
-// };
-
-// For debugging CORS issues, you can temporarily use this more permissive configuration:
-// app.use(cors({
-//     origin: true, // Allow all origins
-//     credentials: true,
-//     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-//     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
-// }));
-
-// app.use(cors(corsOptions));
-
-// Handle preflight requests
-// app.options('*', cors(corsOptions));
-
-// Additional CORS headers for better compatibility
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Credentials', 'true');
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
@@ -79,13 +40,10 @@ app.get("/",(req,res)=>{
     res.json({message: "Radhe Radhe"});
 })
 
-// Health check endpoint
 app.get("/health", async (req, res) => {
     try {
-        // Check database connection
         const dbStatus = mongoose.connection.readyState === 1 ? "connected" : "disconnected";
         
-        // Check if we can query the database
         const productCount = await Product.countDocuments();
         
         res.status(200).json({
@@ -208,7 +166,7 @@ app.get("/getCartItems/:id",async (req,res)=>{
                 _id: product._id,
                 name: product.name,
                 price: product.price,
-                image_url: product.image_url // or whatever your field is
+                image_url: product.image_url 
             } : null
         };
     }));
@@ -216,12 +174,6 @@ app.get("/getCartItems/:id",async (req,res)=>{
     res.status(200).json(items);
 
 
-    // const items = await cartlist.json()
-    // res.status(200).json(items);
-    // // cartlist.map((item)=>{
-    // //     console.log(item);
-    // //     res.status(200).json(item);
-    // // })
 })
 app.post("/user/:id/cart", async (req, res) => {
     const userId = req.params.id;
@@ -232,12 +184,11 @@ app.post("/user/:id/cart", async (req, res) => {
 
         if (!user) return res.status(404).json({ message: "User not found" });
 
-        // Check if product already exists in cart
         const existingItem = user.cart.find(item => item.product_id.toString() === product_id);
 
         if (existingItem) {
             // Update quantity
-            existingItem.quantity += quantity; // or set = quantity if you want to overwrite
+            existingItem.quantity += quantity; 
         } else {
             // Add new item
             user.cart.push({ product_id, image_url, quantity });
